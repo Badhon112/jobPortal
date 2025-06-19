@@ -37,7 +37,6 @@ export class UserService {
         phoneNumber,
         password: hashedPassword,
         role,
-
         profile: {},
       });
       return {

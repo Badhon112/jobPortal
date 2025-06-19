@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
-Schema({ timestamps: true });
+@Schema({ timestamps: true })
 export class Application {
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Job', required: true })
   job: mongoose.Schema.Types.ObjectId;

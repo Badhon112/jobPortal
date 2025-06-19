@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NestMiddleware,
   UnauthorizedException,
@@ -13,15 +14,18 @@ export class IsAuthenticationMiddleware implements NestMiddleware {
     try {
       const token = req.cookies?.token;
       if (!token) {
-        throw new UnauthorizedException('Authentication token missing');
+        res.status(401).json({
+          message: 'User Not Authenticited',
+          success: false,
+        });
       }
       const decode: any = await jwt.verify(token, process.env.SECRET_KEY!);
       if (!decode) {
-        throw new UnauthorizedException('Authentication token missing');
+        res.status(401).json({
+          message: 'Invalid Token',
+          success: false,
+        });
       }
-      //   req.id = decode.userId;
-      //   console.log(decode);
-      //   let id = decode.userId;
       req['userId'] = decode.userId;
       next();
     } catch (error) {

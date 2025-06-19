@@ -1,17 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 
-Schema({ timestamps: true });
+@Schema({ timestamps: true })
 export class Company {
-  @Prop()
+  @Prop({ required: true, unique: true })
   name: string;
-  @Prop()
+  @Prop({ type: String })
   description: string;
-  @Prop()
+  @Prop({ type: String })
   website: string;
-  @Prop()
+  @Prop({ type: String })
   location: string;
-  @Prop()
+  @Prop({ type: String })
   logo: string;
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   userId: mongoose.Schema.Types.ObjectId;

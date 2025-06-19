@@ -27,7 +27,7 @@ export class UserController {
 
   @Post('login')
   login(@Body() Login: Login, @Res() res: Response) {
-    console.log('Login Controller is Called');
+    // console.log('Login Controller is Called');
 
     return this.UserServices.login(Login, res);
   }

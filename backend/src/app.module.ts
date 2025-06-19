@@ -6,6 +6,7 @@ import { IsAuthenticationMiddleware } from './middleware/IsAuthentication.middle
 // import { isAuthentication } from './middleware/IsAuthentication.middleware';
 import { CompanyModule } from './company/company.module';
 import { JobModule } from './job/job.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JobModule } from './job/job.module';
     UserModule,
     CompanyModule,
     JobModule,
+    ApplicationModule,
   ],
   controllers: [],
   providers: [],
@@ -31,6 +33,10 @@ export class AppModule implements NestModule {
         'company/getusercompany',
         'company/getcompanybyid/:id',
         'company/update/:id',
+        'job/upload',
+        'job/getadmincreatedjob',
+        'application/applyjob/:id',
+        'application/getapplyjobs',
       );
   }
 }

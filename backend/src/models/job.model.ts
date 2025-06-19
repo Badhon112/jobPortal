@@ -7,8 +7,8 @@ export class Job {
   title: string;
   @Prop()
   description: string;
-  @Prop()
-  requirement: string;
+  @Prop({ type: Array })
+  requirement: [string];
   @Prop()
   salary: string;
   @Prop()
@@ -16,13 +16,19 @@ export class Job {
   @Prop()
   jobType: string;
   @Prop()
+  experience: string;
+  @Prop()
   position: string;
   @Prop({ ref: 'Company' })
   company: mongoose.Schema.Types.ObjectId;
   @Prop({ ref: 'User' })
   created_by: mongoose.Schema.Types.ObjectId;
-  @Prop({ ref: 'Application' })
-  applications: [{ type: mongoose.Schema.Types.ObjectId }];
+  @Prop({
+    ref: 'Application',
+    type: [mongoose.Schema.Types.ObjectId],
+    default: [],
+  })
+  applications: mongoose.Schema.Types.ObjectId[];
 }
 
 export const JobSchema = SchemaFactory.createForClass(Job);

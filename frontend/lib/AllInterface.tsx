@@ -1,8 +1,12 @@
 export interface SignUpInterface {
-  fullname?: string;
+  fullName?: string;
   email?: string;
   phoneNumber?: string;
   password?: string;
   role?: string;
-  file?: File;
+}
+
+export interface login {
+  email?: string;
+  password?: string;
 }

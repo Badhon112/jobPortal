@@ -6,8 +6,8 @@ import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors();
   // swager set up
-
   const config = new DocumentBuilder()
     .setTitle('Job Portal App')
     .setDescription('Job Portal App API description')
@@ -20,6 +20,7 @@ async function bootstrap() {
   //App alidation Check
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+
   await app.listen(process.env.PORT ?? 5050);
 
   console.log('----------- Job Portal ----------------');

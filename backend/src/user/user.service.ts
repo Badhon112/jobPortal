@@ -27,7 +27,10 @@ export class UserService {
       }
       const user = await this.userModel.findOne({ email });
       if (user) {
-        return new BadRequestException('User Already Exists');
+        return {
+          success: false,
+          message: 'User Already Exits',
+        };
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);

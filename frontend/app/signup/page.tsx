@@ -6,10 +6,24 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignUpInterface } from "@/lib/AllInterface";
 import Link from "next/link";
 import React, { useState } from "react";
+import { apiCall } from "../lib/axios-client";
+import { EndPoint, Methods } from "../lib/config";
+import axios from "axios";
+import { toast } from "sonner";
 
 const page = () => {
-  const [input, setInput] = useState<SignUpInterface>();
-  const changeEventhandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [input, setInput] = useState<SignUpInterface>({
+    fullName: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    role: "",
+  });
+  const [loading, setLoading] = useState(false);
+
+  const changeEventhandler = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     e.preventDefault();
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -18,20 +32,41 @@ const page = () => {
     }));
   };
 
-  const changeFileHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+  const changeRole = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
     setInput((prev) => ({
       ...prev,
-      file: e.target.files?.[0],
+      [name]: value,
     }));
+  };
+
+  const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    try {
+      setLoading(true);
+      e.preventDefault();
+      const response = await apiCall(
+        Methods.POST,
+        EndPoint.REGISTER_USER,
+        input
+      );
+      if (response.success) {
+        toast(response.message);
+      } else {
+        toast(response.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <section className="xl:container xl:mx-auto">
-      <div className="flex items-center justify-center max-w-7xl mx-auto">
+      <div className="flex items-center justify-center lg:max-w-7xl mx-auto">
         <form
           action=""
-          className="w-1/2 border border-gray-200  rounded-md p-4 my-10">
+          className="w-full sm:w-[80%] lg:w-1/2 border border-gray-200  rounded-md p-4 my-10">
           <h1 className="font-bold text-xl mb-5 text-center">Sign Up</h1>
           <div className="my-3">
             <Label>Full Name</Label>
@@ -40,8 +75,8 @@ const page = () => {
               placeholder="Enter Your Name"
               className="outline-none border rounded-[4px] mt-1"
               onChange={changeEventhandler}
-              value={input?.fullname}
-              name="fullname"
+              value={input?.fullName}
+              name="fullName"
               required
             />
           </div>
@@ -84,25 +119,38 @@ const page = () => {
           <div className="flex justify-between items-center">
             <RadioGroup defaultValue="comfortable" className="flex">
               <div className="flex items-center gap-2 cursor-pointer">
-                <RadioGroupItem value="student" id="r1" />
+                <input
+                  type="radio"
+                  value="student"
+                  id="r1"
+                  onChange={changeRole}
+                  checked={input?.role === "student"}
+                  name="role"
+                />
                 <Label htmlFor="r1" className=" cursor-pointer">
                   Student
                 </Label>
               </div>
-              <div className="flex items-center gap-2  cursor-pointer">
-                <RadioGroupItem value="recruiter" id="r2" />
+              <div className="flex items-center justify-center gap-2  cursor-pointer">
+                <input
+                  value="recruiter"
+                  id="r2"
+                  type="radio"
+                  onChange={changeRole}
+                  checked={input?.role === "recruiter"}
+                  name="role"
+                />
                 <Label htmlFor="r2" className=" cursor-pointer">
                   Recruiter
                 </Label>
               </div>
             </RadioGroup>
-            <div className="flex items-center gap-2">
-              <Label htmlFor="profile">Profile</Label>
-              <Input type="file" accept="image/*" className="cursor-pointer" />
-            </div>
           </div>
-          <Button className="w-full my-4 cursor-pointer" type="submit">
-            Sign Up
+          <Button
+            onClick={handleSignUp}
+            className="w-full my-4 cursor-pointer"
+            type="submit">
+            {loading ? "Loading..." : "  Sign Up"}
           </Button>
           <span className="text-sm">
             Already have an account?{" "}

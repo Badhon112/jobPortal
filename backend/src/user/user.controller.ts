@@ -20,7 +20,7 @@ export class UserController {
   //     console.log(CreateUserDto);
   //   }
 
-  @Post('register')
+  @Post('signin')
   register(@Body() Register: Register) {
     return this.UserServices.register(Register);
   }

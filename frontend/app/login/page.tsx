@@ -2,10 +2,25 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { login } from "@/lib/AllInterface";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 const page = () => {
+  const [input, setInput] = useState<login>();
+  const changeEventhandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInput((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="xl:container xl:mx-auto">
       <div className="flex items-center justify-center min-h-[80vh] max-w-7xl mx-auto">
@@ -20,19 +35,30 @@ const page = () => {
               type="text"
               placeholder="Enter Your Email"
               className="outline-none border rounded-[4px] mt-1"
+              onChange={changeEventhandler}
+              value={input?.email}
+              name="email"
+              required
             />
           </div>
 
           <div className="my-3">
             <Label>Password</Label>
             <Input
-              type="text"
+              type="password"
               placeholder="Enter Your Password"
               className="outline-none border rounded-[4px] mt-1"
+              onChange={changeEventhandler}
+              value={input?.password}
+              name="password"
+              required
             />
           </div>
 
-          <Button className="w-full my-4 cursor-pointer" type="submit">
+          <Button
+            onClick={handleLogin}
+            className="w-full my-4 cursor-pointer"
+            type="submit">
             Login
           </Button>
           <span className="text-sm">

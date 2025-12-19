@@ -6,10 +6,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SignUpInterface } from "@/lib/AllInterface";
 import Link from "next/link";
 import React, { useState } from "react";
-import { apiCall } from "../lib/axios-client";
-import { EndPoint, Methods } from "../lib/config";
+// import { apiCall } from "../lib/axios-client";
+// import { EndPoint, Methods } from "../lib/config";
 import axios from "axios";
 import { toast } from "sonner";
+import { apiCall } from "@/lib/axios-client";
+import { EndPoint, Methods } from "@/lib/config";
 
 const page = () => {
   const [input, setInput] = useState<SignUpInterface>({

@@ -8,15 +8,18 @@ export const apiCall = async (
   method: any,
   urlEndPoint: string,
   data?: any,
-  headers?: any
+  headers?: any,
+  withCredentials?: boolean
 ) => {
   let header: any = headers || JsonHeader;
+  let withCredential: any = withCredentials || false;
   // header.Authorization = `Bearer ${token}`;
   switch (method) {
     case "POST":
       return await axios
         .post(`${DEFAULT_URL}/${urlEndPoint}`, data, {
           headers: header,
+          withCredentials: withCredential,
         })
         .then((response: any) => {
           return response.data;
@@ -56,6 +59,7 @@ export const apiCall = async (
       return await axios
         .patch(`${DEFAULT_URL}/${urlEndPoint}`, data, {
           headers: header,
+          withCredentials: withCredential,
         })
         .then((response) => {
           return response.data;

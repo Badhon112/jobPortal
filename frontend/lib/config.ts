@@ -21,4 +21,6 @@ export class EndPoint {
 
   /* ----------- Doctor Service -------------- */
   static REGISTER_USER = "user/signin";
+  static LOGIN_USER = "user/login";
+  static UPDATE_USER = "user/updateProfile";
 }

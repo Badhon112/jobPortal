@@ -2,13 +2,10 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { RadioGroup } from "@/components/ui/radio-group";
 import { SignUpInterface } from "@/lib/AllInterface";
 import Link from "next/link";
 import React, { useState } from "react";
-// import { apiCall } from "../lib/axios-client";
-// import { EndPoint, Methods } from "../lib/config";
-import axios from "axios";
 import { toast } from "sonner";
 import { apiCall } from "@/lib/axios-client";
 import { EndPoint, Methods } from "@/lib/config";
@@ -156,7 +153,7 @@ const page = () => {
           </Button>
           <span className="text-sm">
             Already have an account?{" "}
-            <Link href={"/login"} className="text-blue-600">
+            <Link href={"/user/login"} className="text-blue-600">
               Login
             </Link>{" "}
           </span>

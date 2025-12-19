@@ -21,7 +21,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
 
-  await app.listen(process.env.PORT ?? 5050);
+  await app.listen(process.env.PORT ?? 5000);
 
   console.log('----------- Job Portal ----------------');
   console.log('---------------------------------------');

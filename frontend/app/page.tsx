@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import HeroSection from "./HeroSection";
-import { AppSidebar } from "@/components/ui/app-sidebar";
 
 const page = () => {
   return (

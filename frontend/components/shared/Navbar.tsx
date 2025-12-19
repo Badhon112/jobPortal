@@ -75,7 +75,7 @@ const Navbar = () => {
     //     </div>
     //   </div>
     // </div>
-    <header className="relative z-10 px-6 py-4">
+    <header className="relative z-10 px-6 py-4 border-b">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2">

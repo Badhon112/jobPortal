@@ -3,9 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/shared/Navbar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/ui/app-sidebar";
-
+import { AppSidebar } from "@/components/shared/AppSidebar";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -32,15 +30,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         cz-shortcut-listen="true">
         <Navbar />
-        <SidebarProvider defaultOpen={true}>
-          <div className="flex flex-1 ">
-            <aside className="">
-              <AppSidebar />
-            </aside>
-            <main className="flex-1 overflow-auto ">{children}</main>
+        <div className="min-h-screen bg-gray-50 flex">
+          <div className="sticky top-0 left-0 h-screen">
+            <AppSidebar />
           </div>
-        </SidebarProvider>
-
+          <div className="flex-1 min-h-screen p-6 overflow-auto">
+            <div className="max-w-7xl mx-auto">{children}</div>
+          </div>
+        </div>
         <Toaster />
       </body>
     </html>

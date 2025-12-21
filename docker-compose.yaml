@@ -15,9 +15,9 @@ services:
     build: "./backend"
     container_name: backend_api
     environment:
-      - DBURL=mongodb+srv://biswasbadhon896_db_user:bohrLMgn9m4xz3Q1@jobportalcluster.hsob0uw.mongodb.net/jobportal?appName=jobportalcluster
-        PORT=5000
-        SECRET_KEY=BadhonBiswas
+      # - DBURL=mongodb+srv://biswasbadhon896_db_user:bohrLMgn9m4xz3Q1@jobportalcluster.hsob0uw.mongodb.net/jobportal?appName=jobportalcluster
+      PORT=5000
+      SECRET_KEY=BadhonBiswas
     depends_on:
       - mongodb
     ports:
@@ -29,6 +29,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=
 volumes:
   mongodb_data:
     driver: local

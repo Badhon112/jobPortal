@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    restart: unless-stopped
+  backend:
+    build: "./backend"
+    container_name: backend_api
+    environment:
+      - DBURL=mongodb+srv://biswasbadhon896_db_user:bohrLMgn9m4xz3Q1@jobportalcluster.hsob0uw.mongodb.net/jobportal?appName=jobportalcluster
+        PORT=5000
+        SECRET_KEY=BadhonBiswas
+    depends_on:
+      - mongodb
+    ports:
+      - "5000:5000"
+  frontend:
+    build: ./frontend
+    container_name: frontend-react
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+volumes:
+  mongodb_data:
+    driver: local

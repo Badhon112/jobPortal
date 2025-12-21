@@ -57,7 +57,7 @@
 # networks:
 #   mern-app:
 #     driver: bridge
-version: "3"
+# version: "3"
 services:
   frontend:
     build:

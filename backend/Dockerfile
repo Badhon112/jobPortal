@@ -15,6 +15,7 @@ COPY . .
 # Build the NestJS application
 RUN npm run build
 
+
 # Expose the application port
 EXPOSE 5000
 

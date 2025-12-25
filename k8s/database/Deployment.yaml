@@ -26,4 +26,4 @@ spec:
       volumes:
         - name: mongo-volume
           persistentVolumeClaim:
-            claimName: ebs-sc
+            claimName: ebs-pvc

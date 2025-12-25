@@ -32,6 +32,7 @@ eksctl version
   - AmazonVPCFullAccess
   - AmazonEC2FullAccess
   - AWSCloudFormationFullAccess
+  - AmazonEBSCSIDriverPolicy
 
 ---
 
@@ -79,6 +80,78 @@ $ kubectl get svc
 
 ---
 
+- Service Cluster for EKS CBS DRIVER
+- first role then adon
+
+-> permision
+
+```
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster <your-cluster-name> \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --role-only \
+  --role-name AmazonEKS_EBS_CSI_Driver_Role \
+  --region <your-region>
+```
+
+-> create-addon
+
+```
+aws eks create-addon \
+  --cluster-name <your-cluster-name> \
+  --addon-name aws-ebs-csi-driver \
+  --region <your-region>
+```
+
+-> ebs-sc.yaml
+
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: ebs-sc
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+reclaimPolicy: Delete
+allowVolumeExpansion: true
+parameters:
+  type: gp3
+  fsType: ext4
+
+```
+
+-> ebs-pvc.yaml
+
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ebs-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ebs-sc
+  resources:
+    requests:
+      storage: 5Gi
+
+```
+
+```
+eksctl create iamserviceaccount \
+  --name ebs-csi-controller-sa \
+  --namespace kube-system \
+  --cluster cluster1 \
+  --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
+  --approve \
+  --region <your-region>
+```
+
+---
+
 - Delete this Cluster
 
 ```
@@ -92,3 +165,15 @@ docker build -t jobportalfrontend:v1 .
 ```
 mongodb://admin:password@65.0.135.227:32000/
 ```
+
+---
+
+apt install gitleaks
+
+---
+
+sudo apt-get install wget gnupg
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/trivy.gpg > /dev/null
+echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
+sudo apt-get update
+sudo apt-get install trivy

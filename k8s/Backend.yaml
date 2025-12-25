@@ -18,6 +18,13 @@ spec:
           image: badhon58/jobportalbackend:v1
           ports:
             - containerPort: 5000
+          env:
+            - name: PORT
+              value: 5000
+            - name: DBURL
+              value: mongodb+srv://biswasbadhon896_db_user:gRbnlE3pi1tOUC27@jobportal.rfs6gno.mongodb.net/?appName=jobportal
+            - name: SECRET_KEY
+              value: BadhonBiswas
 ---
 apiVersion: v1
 kind: Service

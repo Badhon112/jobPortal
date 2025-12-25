@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      name: backend-pod
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: badhon58/jobportalbackend:v1
+          ports:
+            - containerPort: 5000

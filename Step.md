@@ -89,21 +89,21 @@ $ kubectl get svc
 eksctl create iamserviceaccount \
   --name ebs-csi-controller-sa \
   --namespace kube-system \
-  --cluster <your-cluster-name> \
+  --cluster cluster1 \
   --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
   --approve \
   --role-only \
   --role-name AmazonEKS_EBS_CSI_Driver_Role \
-  --region <your-region>
+  --region ap-south-1
 ```
 
 -> create-addon
 
 ```
 aws eks create-addon \
-  --cluster-name <your-cluster-name> \
+  --cluster-name cluster1 \
   --addon-name aws-ebs-csi-driver \
-  --region <your-region>
+  --region ap-south-1
 ```
 
 -> ebs-sc.yaml
@@ -147,7 +147,7 @@ eksctl create iamserviceaccount \
   --cluster cluster1 \
   --attach-policy-arn arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy \
   --approve \
-  --region <your-region>
+  --region ap-south-1
 ```
 
 ---

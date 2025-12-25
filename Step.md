@@ -88,3 +88,7 @@ $ eksctl delete cluster --name cluster1 --region ap-south-1
 
 docker build -t jobportalbackend:v1 .
 docker build -t jobportalfrontend:v1 .
+
+```
+mongodb://admin:password@65.0.135.227:32000/
+```

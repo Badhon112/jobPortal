@@ -73,8 +73,8 @@ eksctl create nodegroup --cluster=cluster1 \
                        --nodes-max=2 \
                        --node-volume-size=20
 # Check The Nodes
-$ Kubectl get nodes
-$ Kubectl get svc
+$ kubectl get nodes
+$ kubectl get svc
 ```
 
 ---
@@ -85,3 +85,6 @@ $ Kubectl get svc
 # Delete EKSCTL
 $ eksctl delete cluster --name cluster1 --region ap-south-1
 ```
+
+docker build -t jobportalbackend:v1 .
+docker build -t jobportalfrontend:v1 .

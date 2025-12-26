@@ -74,8 +74,8 @@ eksctl create nodegroup --cluster=cluster1 \
                        --nodes-max=2 \
                        --node-volume-size=20
 # Check The Nodes
-$ kubectl get nodes
-$ kubectl get svc
+kubectl get nodes
+kubectl get svc
 ```
 
 ---

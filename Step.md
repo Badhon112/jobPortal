@@ -177,3 +177,14 @@ wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dear
 echo "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update
 sudo apt-get install trivy
+
+---
+
+Docker Environment Variable
+
+--env / -e /--env-file
+
+docker run --env variable=value image
+
+Now lets inject this file into our Docker Container:
+-> docker run --env-file .env image

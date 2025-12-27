@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    restart: always
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - mongo
+    ports:
+      - "5000:5000"
+    networks:
+      - mern-app
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+volumes:
+  mongo-data:
+network:
+  mern-app:
+    driver: bridge

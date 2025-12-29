@@ -13,9 +13,9 @@ pipeline {
                 cleanWs()
             }
         }
-        stage('Git Checkout') {
-            steps {
-                git branch: 'kubs', url: 'https://github.com/Badhon112/jobPortal.git'
+        stage("Git Checkout"){
+            steps{
+                git branch: 'docker', url: 'https://github.com/Badhon58/jobportal.git'
             }
         }
         stage('Update Environment Files') {
@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                 cat > backend/.env << 'EOF'
                 PORT=5000
-                DBURL=mongodb://admin:badhon@mongo:27017/jobportal?authSource=admin
+                DBURL=mongodb://admin:badhon@13.232.124.105:27017/jobportal?authSource=admin
                 SECRET_KEY=BadhonBiswas
                 EOF
                 '''
@@ -32,26 +32,26 @@ pipeline {
                 // Update frontend .env file with EC2 IP
                 sh '''
                 cat > frontend/.env << 'EOF'
-                NEXT_PUBLIC_API_URL=http://16.16.169.229:5000/api
+                NEXT_PUBLIC_API_URL=http://13.232.124.105:5000/api
                 EOF
                 '''
             }
         }
-        stage('Frontend Compilation') {
-            steps {
+        stage("Frontend Compilation"){
+            steps{
                 dir('frontend') {
                     sh 'find . -name "*.ts" -exec node --check {} +'
                 }
             }
         }
-        stage('Backend Compilation') {
+       stage('Backend Compilation') {
             steps {
                 dir('backend') {
                     sh 'find . -name "*.ts" -exec node --check {} +'
                 }
             }
         }
-        stage('GitLeaks Scan') {
+         stage('GitLeaks Scan') {
             steps {
                 sh 'gitleaks detect --source ./frontend --report-format json --report-path gitleaks-report.json || true'
                 sh 'gitleaks detect --source ./backend --report-format json --report-path gitleaks-report.json || true'
@@ -65,17 +65,41 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate Check') {
+         stage('Quality Gate Check') {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar-scanner'
                 }
             }
         }
-        stage('Docker compose build') {
+        stage('Docker Compose Build For Project') {
+            steps {
+                sh 'docker compose build'
+            }
+        }
+        stage('Docker Compose Up For Project') {
             steps {
                 sh 'docker compose up -d'
             }
         }
+        stage("Docker Compose Build For Monitoring"){
+            steps{
+                dir('prometheus-grafana') {
+                  sh 'docker compose build'
+                }
+            }
+        }
+        stage("Docker Compose Up For Monitoring"){
+            steps{
+                dir('prometheus-grafana') {
+                  sh 'docker compose up -d'
+                }
+            }
+        }
     }
 }
+
+
+
+sqa_0fa5d143e9b2258df3b74e74a7ee3af89dbb8c58
+sonar-scanner

@@ -375,7 +375,3 @@ pipeline {
 ### Monitoring
 
 ![Alt text for screen readers](./Image/GrafanaDashBoard.png "Optional title text on mouseover")
-
-### Database
-
-![Alt text for screen readers](./Image/Mongodb.png "Optional title text on mouseover")

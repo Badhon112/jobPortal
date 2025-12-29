@@ -348,6 +348,34 @@ pipeline {
 
 ## Image of This project
 
+### Docker Container Running
+
+![Alt text for screen readers](./Image/DockerContainer.png "Optional title text on mouseover")
+
 ### Jenkins Pipeline View
 
 ![Alt text for screen readers](./Image/Jenkins.png "Optional title text on mouseover")
+
+### Sonarqube
+
+![Alt text for screen readers](./Image/sonarqube.png "Optional title text on mouseover")
+
+### Nextjs Frontend
+
+![Alt text for screen readers](./Image/frontendapplication.png "Optional title text on mouseover")
+
+### Nest.js Backend
+
+![Alt text for screen readers](./Image/backend.png "Optional title text on mouseover")
+
+### Database
+
+![Alt text for screen readers](./Image/Mongodb.png "Optional title text on mouseover")
+
+### Monitoring
+
+![Alt text for screen readers](./Image/GrafanaDashBoard.png "Optional title text on mouseover")
+
+### Database
+
+![Alt text for screen readers](./Image/Mongodb.png "Optional title text on mouseover")

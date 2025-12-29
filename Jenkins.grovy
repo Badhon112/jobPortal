@@ -98,8 +98,3 @@ pipeline {
         }
     }
 }
-
-
-
-sqa_0fa5d143e9b2258df3b74e74a7ee3af89dbb8c58
-sonar-scanner

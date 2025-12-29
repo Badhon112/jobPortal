@@ -2,25 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SignUpInterface } from "@/lib/AllInterface";
+import { RadioGroup } from "@/components/ui/radio-group";
+import { login } from "@/lib/AllInterface";
+import { apiCall } from "@/lib/axios-client";
+import { EndPoint, JsonHeader, Methods } from "@/lib/config";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { apiCall } from "../lib/axios-client";
-import { EndPoint, Methods } from "../lib/config";
-import axios from "axios";
 import { toast } from "sonner";
 
 const page = () => {
-  const [input, setInput] = useState<SignUpInterface>({
-    fullName: "",
-    email: "",
-    phoneNumber: "",
-    password: "",
-    role: "",
-  });
+  const [input, setInput] = useState<login>();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const changeEventhandler = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -31,7 +25,6 @@ const page = () => {
       [name]: value,
     }));
   };
-
   const changeRole = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setInput((prev) => ({
@@ -39,18 +32,20 @@ const page = () => {
       [name]: value,
     }));
   };
-
-  const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     try {
       setLoading(true);
-      e.preventDefault();
       const response = await apiCall(
         Methods.POST,
-        EndPoint.REGISTER_USER,
-        input
+        EndPoint.LOGIN_USER,
+        input,
+        JsonHeader,
+        true
       );
       if (response.success) {
         toast(response.message);
+        router.push("/");
       } else {
         toast(response.message);
       }
@@ -63,27 +58,16 @@ const page = () => {
 
   return (
     <section className="xl:container xl:mx-auto">
-      <div className="flex items-center justify-center lg:max-w-7xl mx-auto">
+      <div className="flex items-center justify-center min-h-[80vh] max-w-7xl mx-auto">
         <form
           action=""
-          className="w-full sm:w-[80%] lg:w-1/2 border border-gray-200  rounded-md p-4 my-10">
-          <h1 className="font-bold text-xl mb-5 text-center">Sign Up</h1>
-          <div className="my-3">
-            <Label>Full Name</Label>
-            <Input
-              type="text"
-              placeholder="Enter Your Name"
-              className="outline-none border rounded-[4px] mt-1"
-              onChange={changeEventhandler}
-              value={input?.fullName}
-              name="fullName"
-              required
-            />
-          </div>
+          className="w-1/2 border border-gray-200  rounded-md p-4 my-10">
+          <h1 className="font-bold text-xl mb-5 text-center">Login</h1>
+
           <div className="my-3">
             <Label>Email</Label>
             <Input
-              type="email"
+              type="text"
               placeholder="Enter Your Email"
               className="outline-none border rounded-[4px] mt-1"
               onChange={changeEventhandler}
@@ -92,18 +76,7 @@ const page = () => {
               required
             />
           </div>
-          <div className="my-3">
-            <Label>Phone Number</Label>
-            <Input
-              type="phoneNumber"
-              placeholder="Enter Your Phone Number"
-              className="outline-none border rounded-[4px] mt-1"
-              onChange={changeEventhandler}
-              value={input?.phoneNumber}
-              name="phoneNumber"
-              required
-            />
-          </div>
+
           <div className="my-3">
             <Label>Password</Label>
             <Input
@@ -146,16 +119,18 @@ const page = () => {
               </div>
             </RadioGroup>
           </div>
+
           <Button
-            onClick={handleSignUp}
+            onClick={handleLogin}
             className="w-full my-4 cursor-pointer"
+            disabled={loading}
             type="submit">
-            {loading ? "Loading..." : "  Sign Up"}
+            {loading ? "Loading..." : "Login"}
           </Button>
           <span className="text-sm">
-            Already have an account?{" "}
-            <Link href={"/login"} className="text-blue-600">
-              Login
+            Don't have an account?{" "}
+            <Link href={"/user/signup"} className="text-blue-600">
+              SignUp
             </Link>{" "}
           </span>
         </form>

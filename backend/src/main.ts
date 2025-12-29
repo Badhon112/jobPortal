@@ -5,8 +5,20 @@ import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.enableCors();
+  const corsOptions = {
+    origin: true,
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+    ],
+    exposedHeaders: ['Set-Cookie'],
+  };
+  app.enableCors(corsOptions);
   // swager set up
   const config = new DocumentBuilder()
     .setTitle('Job Portal App')
@@ -20,8 +32,9 @@ async function bootstrap() {
   //App alidation Check
   app.useGlobalPipes(new ValidationPipe());
   app.use(cookieParser());
+  app.setGlobalPrefix('api');
 
-  await app.listen(process.env.PORT ?? 5050);
+  await app.listen(process.env.PORT ?? 5000);
 
   console.log('----------- Job Portal ----------------');
   console.log('---------------------------------------');

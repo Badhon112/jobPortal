@@ -17,8 +17,10 @@ export const FormDataHeader = {
 
 export class EndPoint {
   static DEFAULT_URL =
-    process.env.NEXT_PUBLIC_CLINICALL_SERVER_URL || "http://localhost:5000";
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
   /* ----------- Doctor Service -------------- */
   static REGISTER_USER = "user/signin";
+  static LOGIN_USER = "user/login";
+  static UPDATE_USER = "user/updateProfile";
 }
